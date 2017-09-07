@@ -49,7 +49,7 @@ class App extends React.Component {
     return (
       <div className="container">
         <div id="add-task-div">
-          <h1>Todo List</h1>
+          <h1>Todo List ({this.props.incompleteCount})</h1>
 
           <label className="hide-completed">
             <input 
@@ -80,10 +80,12 @@ class App extends React.Component {
 
 App.PropTypes = {
   tasks: PropTypes.array.isRequired,
+  incompleteCount: PropTypes.number.isRequired,
 }
 
 export default createContainer(() => {
   return {
     tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
+    incompleteCount: Tasks.find({ checked: { $ne: true } }).count(),
   }
 }, App);

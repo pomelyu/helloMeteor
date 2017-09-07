@@ -9,12 +9,21 @@ class App extends React.Component {
   constructor(props){
     super(props);
 
+    this.state = {
+      hideCompleted: false,
+    };
+
     this.renderTasks = this.renderTasks.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleHideCompleted = this.toggleHideCompleted.bind(this);
   }
 
   renderTasks() {
-    return this.props.tasks.map( task => (
+    var filterdTasks = this.props.tasks;
+    if (this.state.hideCompleted){
+      filterdTasks = filterdTasks.filter(task => !task.checked);
+    }
+    return filterdTasks.map( task => (
       <Task key={task._id} task={task} />
     ));
   }
@@ -32,11 +41,26 @@ class App extends React.Component {
     this._textInput.value = '';
   }
 
+  toggleHideCompleted(){
+    this.setState({ hideCompleted: !this.state.hideCompleted });
+  }
+
   render() {
     return (
       <div className="container">
         <div id="add-task-div">
           <h1>Todo List</h1>
+
+          <label className="hide-completed">
+            <input 
+              type="checkbox"
+              readOnly
+              checked={this.state.hideCompleted}
+              onClick={this.toggleHideCompleted}
+            />
+            Hide completed Task
+          </label>
+
           <form className="new-task" onSubmit={this.handleSubmit}>
             <input 
               type="text"

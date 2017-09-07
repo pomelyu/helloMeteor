@@ -10,6 +10,7 @@ class App extends React.Component {
     super(props);
 
     this.renderTasks = this.renderTasks.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   renderTasks() {
@@ -18,12 +19,32 @@ class App extends React.Component {
     ));
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const text = this._textInput.value.trim();
+
+    Tasks.insert({
+      text,
+      createdAt: new Date(),
+    })
+
+    this._textInput.value = '';
+  }
+
   render() {
     return (
       <div className="container">
-        <head>
+        <div id="add-task-div">
           <h1>Todo List</h1>
-        </head>
+          <form className="new-task" onSubmit={this.handleSubmit}>
+            <input 
+              type="text"
+              ref={ component => this._textInput = component}
+              placeholder="Type to add new tasks"
+            />
+          </form>
+        </div>
 
         <ul>
           {this.renderTasks()}

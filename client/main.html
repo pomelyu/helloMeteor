@@ -5,19 +5,5 @@
 <body>
   <h1>Meteor TodoList</h1>
 
-  {{> todosList}} <!-- import Blaze template "todosList"-->
+  <div id="render-target"></div>
 </body>
-
-<template name="todosList">
-  <h3>Todos</h3>
-  <ul>
-    {{#each todos}}
-      {{> todo}}
-    {{/each}}
-  </ul>
-  <button class="add-todo">Add</button>
-</template>
-
-<template name="todo">
-  <li class="{{#if done}}done{{/if}}">{{label}}</li>
-</template>

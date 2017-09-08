@@ -87,9 +87,10 @@ App.PropTypes = {
 }
 
 export default createContainer(() => {
-  const userId = Meteor.userId();
+  Meteor.subscribe('tasks');
+
   return {
-    tasks: Tasks.find({ owner: userId }, { sort: { createdAt: -1 } }).fetch(),
+    tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
     incompleteCount: Tasks.find({ checked: { $ne: true } }).count(),
     currentUser: Meteor.user(),
   }

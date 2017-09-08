@@ -35,12 +35,7 @@ class App extends React.Component {
 
     const text = this._textInput.value.trim();
 
-    Tasks.insert({
-      text,
-      createdAt: new Date(),
-      owner: Meteor.userId(),           // _id of logged in user
-      username: Meteor.user().username, // username of logged in user
-    })
+    Meteor.call('tasks.insert', text);
 
     this._textInput.value = '';
   }

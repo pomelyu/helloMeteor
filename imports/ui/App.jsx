@@ -25,9 +25,18 @@ class App extends React.Component {
     if (this.state.hideCompleted){
       filterdTasks = filterdTasks.filter(task => !task.checked);
     }
-    return filterdTasks.map( task => (
-      <Task key={task._id} task={task} />
-    ));
+    return filterdTasks.map( task => {
+      const currentUserId = this.props.currentUser && this.props.currentUser._id;
+      const showPrivateButton = (task.owner === currentUserId);
+
+      return (
+        <Task 
+          key={task._id} 
+          task={task} 
+          showPrivateButton={showPrivateButton}
+        />
+      )
+    });
   }
 
   handleSubmit(event) {

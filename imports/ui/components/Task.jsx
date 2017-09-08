@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 import classnames from 'classnames';
 
-import Tasks from '../api/tasks.js';
-
 class Task extends React.Component {
   constructor(props){
     super(props);

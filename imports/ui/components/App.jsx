@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
 
-import Tasks from '../api/tasks.js';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 import Task from './Task.jsx';
@@ -56,7 +54,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div id="add-task-div">
+        <div id="add-task-div" style={{ background: this.props.backgroundColor }}>
           <h1>Todo List ({this.props.incompleteCount})</h1>
 
           <label className="hide-completed">
@@ -68,6 +66,8 @@ class App extends React.Component {
             />
             Hide completed Task
           </label>
+
+          <button onClick={this.props.changeBackground} style={{ marginLeft: 20 }}>Change Color</button>
 
           <AccountsUIWrapper />
 
@@ -93,14 +93,8 @@ class App extends React.Component {
 App.PropTypes = {
   tasks: PropTypes.array.isRequired,
   incompleteCount: PropTypes.number.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
 }
 
-export default createContainer(() => {
-  Meteor.subscribe('tasks');
-
-  return {
-    tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
-    incompleteCount: Tasks.find({ checked: { $ne: true } }).count(),
-    currentUser: Meteor.user(),
-  }
-}, App);
+export default App;
